@@ -130,7 +130,8 @@
   (setq projectile-completion-system 'helm))
 
 ;; used by helm-projectile
-(use-package helm-rg :ensure)
+(use-package helm-rg :ensure
+  :bind (("C-c r" . helm-rg)))
 
 					; helm projectile is a separate package
 (use-package helm-projectile :ensure :demand
