@@ -124,9 +124,9 @@
 
 					; projectile always activated
 (use-package projectile
-  :ensure
+  :ensure :demand
   :init   (setq projectile-use-git-grep t)
-  :config (projectile-global-mode t)
+  :config (projectile-mode 1)
   (setq projectile-completion-system 'helm))
 
 ;; used by helm-projectile
