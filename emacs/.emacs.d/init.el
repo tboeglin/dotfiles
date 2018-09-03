@@ -180,10 +180,10 @@
 	 ("\C-ca" . org-agenda)
 	 ("\C-cc" . org-capture))
   :config (setq org-log-done t
-		org-agenda-files (list "~/org/inbox.org"	; where stuff lands
-				       "~/org/gtd.org"		; where stuff gets refiled in projects
-				       "~/org/someday.org"	; where non immediatly actionnable stuff ends
-				       "~/org/ticker.org")	; where stuff 
+		org-agenda-files (list "~/gtd/inbox.org"	; where stuff lands
+				       "~/gtd/gtd.org"		; where stuff gets refiled in projects
+				       "~/gtd/someday.org"	; where non immediatly actionnable stuff ends
+				       "~/gtd/tickler.org")	; where stuff
 		org-clock-persist 'history
 		org-hierarchical-todo-statistics nil
 		org-capture-templates '(("t" "Todo [inbox]" entry
