@@ -244,10 +244,19 @@
   (slime-require :swank-listener-hooks))
 
 ;;; Haskell
-(use-package intero :ensure)
+;; (use-package intero :ensure)
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :init
+  (add-hook 'haskell-mode-hook 'dante-mode)
+  (add-hook 'haskell-mode-hook 'flycheck-mode))
+
 (use-package haskell-mode :ensure
-  :config (add-hook 'haskell-mode-hook 'intero-mode)
+  :config
   (setq haskell-font-lock-symbols nil))
+
 
 
 ;;; erlang
@@ -350,7 +359,7 @@
 (use-package company-irony :ensure)
 
 (use-package elfeed :ensure
-  :config 
+  :config
   (global-set-key (kbd "C-x w") 'elfeed)
   (add-hook 'elfeed-new-entry-hook
 	    (elfeed-make-tagger :before "2 weeks ago"
