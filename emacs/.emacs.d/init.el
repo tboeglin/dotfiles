@@ -97,8 +97,14 @@
 ;;   :config (load-theme 'leuven)
 ;;   :demand)
 
-(use-package solarized-theme :ensure
-  :config (load-theme 'solarized-dark)
+;;(use-package solarized-theme :ensure
+;;  :config (load-theme 'solarized-dark)
+;;  :demand)
+
+(use-package zerodark-theme :ensure
+  :config
+  (load-theme 'zerodark)
+  (zerodark-setup-modeline-format)
   :demand)
 
 ;;; Helm
