@@ -54,32 +54,6 @@
 	  helm-locate-case-fold-search nil
 	  helm-locate-command "mdfind %s -name %s"
 	  dired-use-ls-dired nil)))
-; where homebrew installs stuff
-;    (push "/usr/local/bin/" exec-path)))
-
-;; Add the jenv shims dir if it exists so ensime and friends pick up
-;; the managed java version
-;; (let ((jenv-shims-dir "~/.jenv/shims"))
-;;   (when (file-directory-p jenv-shims-dir)
-;;     (setq exec-path (cons jenv-shims-dir exec-path))
-;;     (setenv "PATH" (concatenate 'string jenv-shims-dir ":" (getenv "PATH")))))
-
-;; (let ((cargo-path "~/.cargo/bin"))
-;;   (when (file-directory-p cargo-path)
-;;     (setq exec-path (cons cargo-path exec-path))
-;;     (setenv "PATH" (concatenate 'string cargo-path ":" (getenv "PATH")))))
-
-;; 					; for stack stuff
-;; (push "~/.local/bin" exec-path)
-;; (push "~/local/bin" exec-path)
-;; ;; make /usr/local/bin visible to process started by call-process.
-;; ;; without this, stack (started by intero) cannot find the system
-;; ;; wide ghc installed with homebrew
-;; (setenv "PATH"
-;; 	(concatenate 'string (getenv "PATH") ":/usr/local/bin"))
-;; 					; (setenv "ANDROID_HOME" "/usr/local/opt/android-sdk")
-
-
 
 ;;; ensure use-package is installed and loaded before using it for the
 ;;; remaining of the configuration
@@ -205,7 +179,7 @@
 ;;; Ace-window for easy window nav
 (use-package ace-window :ensure
   :bind ("C-:" . ace-window) 		; azerty
-        ("C-." . ace-window))		; qwerty
+        ("C-," . ace-window))		; qwerty
 
 (use-package ace-jump-mode :ensure
   :bind ("C-c SPC" . ace-jump-mode))
@@ -256,8 +230,6 @@
 (use-package haskell-mode :ensure
   :config
   (setq haskell-font-lock-symbols nil))
-
-
 
 ;;; erlang
 (use-package erlang :ensure)
@@ -401,15 +373,14 @@
 		      (add-hook 'write-file-functions 'delete-trailing-whitespace)))
   (add-hook 'python-mode-hook 'anaconda-mode))
 
+(use-package anaconda-mode :ensure)
+(use-package company-anaconda :ensure)
+
 ;;; ruby stuff
 (use-package ruby-mode :ensure)
 
 ;;; lua
 (use-package lua-mode :ensure)
-
-
-(use-package anaconda-mode :ensure)
-(use-package company-anaconda :ensure)
 
 ;;; Stack overflow
 (use-package sx :ensure
@@ -425,5 +396,3 @@
 
 (use-package feature-mode :ensure)
 
-(use-package restclient :ensure)
-(use-package restclient-helm :ensure)
