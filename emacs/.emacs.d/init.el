@@ -171,6 +171,9 @@
   :config (global-undo-tree-mode)
   :bind ("C-x u" . undo-tree-visualize))
 
+;;; htmlize for org HTML export
+(use-package htmlize :ensure)
+
 ;;; Org mode
 (use-package org :ensure :pin "org"
   :bind (("\C-cl" . org-store-link)
