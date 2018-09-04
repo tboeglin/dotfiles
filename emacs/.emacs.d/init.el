@@ -108,7 +108,7 @@
   :init   (setq projectile-use-git-grep t)
   :config (projectile-mode 1)
   (setq projectile-completion-system 'helm)
-  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 ;; used by helm-projectile
 (use-package helm-rg :ensure
