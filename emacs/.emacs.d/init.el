@@ -218,14 +218,13 @@
   (slime-require :swank-listener-hooks))
 
 ;;; Haskell
-;; (use-package intero :ensure)
-(use-package dante
-  :ensure t
-  :after haskell-mode
-  :commands 'dante-mode
-  :init
-  (add-hook 'haskell-mode-hook 'dante-mode)
-  (add-hook 'haskell-mode-hook 'flycheck-mode))
+(use-package intero :ensure
+ :after haskell-mode
+ :init
+ (add-hook 'haskell-mode-hook 'intero-mode)
+ (add-hook 'haskell-mode-hook 'flycheck-mode))
+
+
 
 (use-package haskell-mode :ensure
   :config
@@ -395,4 +394,3 @@
 		     ("s" . sx-search)))
 
 (use-package feature-mode :ensure)
-
