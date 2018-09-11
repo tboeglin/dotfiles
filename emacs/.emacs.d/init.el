@@ -67,6 +67,8 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package hydra :ensure)
+
 ;; (use-package leuven-theme :ensure
 ;;   :config (load-theme 'leuven)
 ;;   :demand)
@@ -75,11 +77,17 @@
 ;;  :config (load-theme 'solarized-dark)
 ;;  :demand)
 
-(use-package zerodark-theme :ensure
+(use-package doom-themes :ensure
   :config
-  (load-theme 'zerodark)
-  (zerodark-setup-modeline-format)
-  :demand)
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config)
+  (load-theme 'doom-one))
+
+;;(use-package zerodark-theme :ensure
+;;  :config
+;;  (load-theme 'zerodark)
+;;  (zerodark-setup-modeline-format)
+;;  :demand)
 
 ;;; Helm
 (use-package helm :ensure :demand
@@ -224,17 +232,16 @@
  (add-hook 'haskell-mode-hook 'intero-mode)
  (add-hook 'haskell-mode-hook 'flycheck-mode))
 
-
-
 (use-package haskell-mode :ensure
   :config
   (setq haskell-font-lock-symbols nil))
 
+(use-package dhall-mode :ensure
+  :config
+  (setf dhall-format-command nil))
+
 ;;; erlang
 (use-package erlang :ensure)
-
-(use-package powerline :ensure
-  :config (powerline-default-theme))
 
 (use-package ledger-mode :ensure
   :mode ("\\.dat$" . ledger-mode))
