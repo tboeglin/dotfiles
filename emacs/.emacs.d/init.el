@@ -55,6 +55,11 @@
 	  helm-locate-command "mdfind %s -name %s"
 	  dired-use-ls-dired nil)))
 
+;;; scratch buffer is immortal
+(add-hook 'kill-buffer-query-functions
+          (lambda ()
+	    (not (member (buffer-name) '("*scratch*" "scratch.el")))))
+
 ;;; ensure use-package is installed and loaded before using it for the
 ;;; remaining of the configuration
 (if (not (package-installed-p 'use-package))
@@ -68,14 +73,6 @@
   (exec-path-from-shell-initialize))
 
 (use-package hydra :ensure)
-
-;; (use-package leuven-theme :ensure
-;;   :config (load-theme 'leuven)
-;;   :demand)
-
-;;(use-package solarized-theme :ensure
-;;  :config (load-theme 'solarized-dark)
-;;  :demand)
 
 (use-package doom-themes :ensure
   :config
