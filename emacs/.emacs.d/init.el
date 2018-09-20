@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t -*-
+
 ;;; Save Custom things in a separate file
 (setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
 (load custom-file)
@@ -106,6 +108,8 @@
 	 ("C-h a" . helm-apropos)
 	 ("C-x C-b" . helm-buffers-list))
   :diminish "")
+
+(use-package helm-pass :ensure)
 
 ; projectile always activated
 (use-package projectile
