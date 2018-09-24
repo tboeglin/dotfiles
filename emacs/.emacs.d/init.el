@@ -320,7 +320,8 @@
 (use-package ensime :ensure
   :pin melpa-stable
   :init (setq ensime-startup-snapshot-notification nil
-	      ensime-startup-notification nil)
+	      ensime-startup-notification nil
+	      ensime-default-java-flags "-Xms4096m -Xmx4096m -XX:ReservedCodeCacheSize=128m -XX:MaxMetaspaceSize=256m")
   :config (bind-key "M-p" nil ensime-mode-map)
   (bind-key "C-c C-p" 'ensime-backward-note ensime-mode-map)
   (bind-key "M-n" nil ensime-mode-map)
