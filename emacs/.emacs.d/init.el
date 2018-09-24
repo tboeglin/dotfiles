@@ -317,6 +317,14 @@
   :commands popup-imenu
   :bind ("M-i" . popup-imenu))
 
+(use-package sbt-mode :ensure
+  :config
+  (setq sbt:program-options
+	'("-mem" "4096" "-Djline.terminal=none"))
+  :bind (:map sbt:mode-map
+	      ("C-a" . comint-bol-or-process-mark)
+	      ("C-c C-a" . move-beginning-of-line)))
+
 (use-package ensime :ensure
   :pin melpa-stable
   :init (setq ensime-startup-snapshot-notification nil
