@@ -325,15 +325,24 @@
 	      ("C-a" . comint-bol-or-process-mark)
 	      ("C-c C-a" . move-beginning-of-line)))
 
+(defun ensime-edit-definition-with-fallback (arg)
+  "Variant of `ensime-edit-definition' with ctags if ENSIME is not available."
+  (interactive "P")
+  (unless (and (ensime-connection-or-nil)
+               (ensime-edit-definition arg))
+    (projectile-find-tag)))
+
 (use-package ensime :ensure
   :pin melpa-stable
   :init (setq ensime-startup-snapshot-notification nil
 	      ensime-startup-notification nil
 	      ensime-default-java-flags "-Xms4096m -Xmx4096m -XX:ReservedCodeCacheSize=128m -XX:MaxMetaspaceSize=256m")
-  :config (bind-key "M-p" nil ensime-mode-map)
-  (bind-key "C-c C-p" 'ensime-backward-note ensime-mode-map)
-  (bind-key "M-n" nil ensime-mode-map)
-  (bind-key "C-c C-n" 'ensime-forward-note ensime-mode-map)
+  :bind (:map ensime-mode-map
+	      ("M-p" . nil)
+	      ("C-c C-p" . 'ensime-backward-note)
+	      ("M-n" . nil)
+	      ("C-c C-n" . 'ensime-forward-note))
+  :config
   (setq scala-indent:align-parameters t
 	scala-indent:align-forms t))
 
