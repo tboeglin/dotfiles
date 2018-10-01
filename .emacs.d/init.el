@@ -117,7 +117,19 @@
   :init   (setq projectile-use-git-grep t)
   :config (projectile-mode 1)
   (setq projectile-completion-system 'helm)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (defun run-ctags-in-projectile-root ()
+    (interactive)
+    (projectile-with-default-dir (projectile-project-root)
+      (let ((ctags-process (start-process "CTAGS" nil "ctags" "-Re")))
+	(set-process-sentinel ctags-process
+			      (lambda (p s)
+				(message (format "Process %s %s" p s)))))))
+  :bind (:map projectile-mode-map
+	      ("C-c p" . 'projectile-command-map)
+	      :map projectile-command-map
+	      ("x c" . run-ctags-in-projectile-root)))
+
+;;  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 ;; used by helm-projectile
 (use-package helm-rg :ensure
