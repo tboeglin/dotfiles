@@ -266,12 +266,21 @@
   (add-hook 'after-init-hook 'server-start t))
 
 ;;; for rust
+(defun set-rust-src-path-env-variable ()
+  "Use rustc to get the locally installed source path and set RUST_SRC_PATH to it"
+  (let* ((rust-install-directory (shell-command-to-string "rustc --print sysroot"))
+	(rust-stdlib-src-directory (concat (string-trim rust-install-directory) "/lib/rustlib/src/rust/src")))
+    (when (file-directory-p rust-stdlib-src-directory)
+      (setenv "RUST_SRC_PATH" rust-stdlib-src-directory)
+      rust-stdlib-src-directory)))
+
 (use-package rust-mode :ensure
   :mode "\\.rs\\'"
   :init
   (setq rust-format-on-save t)
   (add-hook 'rust-mode-hook 'lsp-mode)
-  (add-hook 'rust-mode-hook 'lsp-rust-enable))
+  (add-hook 'rust-mode-hook 'lsp-rust-enable)
+  (add-hook 'rust-mode-hook 'set-rust-src-path-env-variable))
 
 (use-package lsp-mode :ensure
   :config (add-hook 'lsp-mode-hook 'lsp-ui-mode))
