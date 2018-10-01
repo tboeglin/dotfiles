@@ -199,8 +199,8 @@
 
 ;;; Ace-window for easy window nav
 (use-package ace-window :ensure
-  :bind ("C-:" . ace-window) 		; azerty
-        ("C-," . ace-window))		; qwerty
+  :bind ("C-'" . ace-window))
+
 
 (use-package ace-jump-mode :ensure
   :bind ("C-c SPC" . ace-jump-mode))
