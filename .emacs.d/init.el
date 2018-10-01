@@ -360,7 +360,8 @@
 	      ("M-p" . nil)
 	      ("C-c C-p" . 'ensime-backward-note)
 	      ("M-n" . nil)
-	      ("C-c C-n" . 'ensime-forward-note))
+	      ("C-c C-n" . 'ensime-forward-note)
+	      ("M-." . 'ensime-edit-definition-with-fallback))
   :config
   (setq scala-indent:align-parameters t
 	scala-indent:align-forms t))
