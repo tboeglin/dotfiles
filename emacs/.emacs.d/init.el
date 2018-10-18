@@ -12,7 +12,8 @@
       inhibit-startup-screen t
       inhibit-startup-message t
       inhibit-startup-echo-area-message t
-      tab-always-indent 'complete)
+      tab-always-indent 'complete
+      ffap-machine-p-known 'reject)
 
 ;;; 0 => never blink. n > 0 => blink n times waiting for input
 (blink-cursor-mode 0)
@@ -409,6 +410,16 @@
 	      (company-mode)
 	      (flycheck-mode)
 	      (turn-on-purescript-indentation))))
+
+
+;;; csharp / omnisharp
+(use-package csharp-mode :ensure)
+
+(use-package omnisharp :ensure
+  :after company
+  :config
+  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  (add-to-list 'company-backends 'company-omnisharp))
 
 ;;; Seldom used scripting languages
 ;;; Python setup
