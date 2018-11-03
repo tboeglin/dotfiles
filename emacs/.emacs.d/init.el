@@ -295,7 +295,7 @@
 
 
 ;;; scala stuff
-(use-package scala-mode
+(use-package scala-mode :ensure
   :config
   (add-hook 'scala-mode-hook
 	    (lambda ()
