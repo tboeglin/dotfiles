@@ -239,6 +239,9 @@
   (slime-setup '(slime-fancy slime-tramp slime-asdf))
   (slime-require :swank-listener-hooks))
 
+;;; Scheme support for when I'll finally start working on SICP
+(use-package geiser :ensure)
+
 ;;; Haskell
 (use-package intero :ensure
  :after haskell-mode
@@ -290,9 +293,8 @@
 
 (use-package lsp-rust :ensure
   :init
-  (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
+;;  (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
   :after lsp-mode)
-
 
 ;;; scala stuff
 (use-package scala-mode :ensure
