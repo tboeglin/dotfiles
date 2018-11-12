@@ -83,11 +83,8 @@
   (doom-themes-org-config)
   (load-theme 'doom-one))
 
-;;(use-package zerodark-theme :ensure
-;;  :config
-;;  (load-theme 'zerodark)
-;;  (zerodark-setup-modeline-format)
-;;  :demand)
+;; Just a reminder to test this one someday
+(use-package tao-theme :ensure)
 
 ;;; Helm
 (use-package helm :ensure :demand
