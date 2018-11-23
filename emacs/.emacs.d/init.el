@@ -243,8 +243,10 @@
 (use-package sly
   :ensure
   :init
-  (setq inferior-lisp-program
-	(if (string-equal system-type "darwin") "ccl64" "sbcl --dynamic-space-size 2048")))
+  (setq sly-lisp-implementations
+      '((sbcl ("sbcl" "--dynamic-space-size" "2048") :coding-system utf-8-unix)
+	(ccl ("ccl64")))))
+
 
 
 ;;; Scheme support for when I'll finally start working on SICP
