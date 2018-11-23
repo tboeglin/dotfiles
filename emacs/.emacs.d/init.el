@@ -192,6 +192,8 @@
 
   (org-clock-persistence-insinuate))
 
+(use-package ox-reveal :ensure :after org)
+
 ;;; contains a function to display the current active keymap
 (use-package help-fns+ :ensure)
 
