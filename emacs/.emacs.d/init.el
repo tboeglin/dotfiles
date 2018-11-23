@@ -226,17 +226,26 @@
 
 
 ;;; Common Lisp dev w/ SLIME
-(use-package slime
+;;(use-package slime
+;;  :ensure
+;;  :init
+;;  (setq inferior-lisp-program
+;;	(if (string-equal system-type "darwin") "ccl64" "sbcl --dynamic-space-size 2048"))
+;;  :config
+;;  (set-language-environment "UTF-8")
+;;  (setq slime-net-coding-system 'utf-8-unix)
+;;  (setq slime-use-autodoc-mode nil)
+;;  (slime-setup '(slime-fancy slime-tramp slime-asdf))
+;;  (slime-require :swank-listener-hooks))
+
+
+;;; test drive sly for a bit
+(use-package sly
   :ensure
   :init
-  (setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
-;;	(if (string-equal system-type "darwin") "ccl64" "sbcl"))
-  :config
-  (set-language-environment "UTF-8")
-  (setq slime-net-coding-system 'utf-8-unix)
-  (setq slime-use-autodoc-mode nil)
-  (slime-setup '(slime-fancy slime-tramp slime-asdf))
-  (slime-require :swank-listener-hooks))
+  (setq inferior-lisp-program
+	(if (string-equal system-type "darwin") "ccl64" "sbcl --dynamic-space-size 2048")))
+
 
 ;;; Scheme support for when I'll finally start working on SICP
 (use-package geiser :ensure)
