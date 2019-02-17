@@ -224,9 +224,8 @@
 		   vc-handled-backends))
   (setq magit-last-seen-setup-instructions "1.4.0")
   :bind
-  ("<f5>" . magit-status)
   ("C-c g s" . magit-status)
-  ("C-c g b" . magit-blame))
+  ("C-c g b" . magit-blame-addition))
 
 
 ;;; Common Lisp dev w/ SLIME
@@ -450,6 +449,9 @@
 
 ;;; ruby stuff
 (use-package ruby-mode :ensure)
+
+;;; kill me now
+(use-package puppet-mode :ensure)
 
 ;;; lua
 (use-package lua-mode :ensure)
