@@ -254,6 +254,9 @@
 ;;; Scheme support for when I'll finally start working on SICP
 (use-package geiser :ensure)
 
+(use-package flycheck
+  :init (global-flycheck-mode))
+
 ;;; Haskell
 (use-package intero :ensure
  :after haskell-mode
@@ -298,10 +301,13 @@
   (add-hook 'rust-mode-hook 'lsp-rust-enable)
   (add-hook 'rust-mode-hook 'set-rust-src-path-env-variable))
 
-(use-package lsp-mode :ensure
-  :config (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
-(use-package lsp-ui :ensure)
+
+(use-package lsp-mode :ensure
+  :init (setq lsp-prefer-flymake nil))
+
+(use-package lsp-ui :ensure
+  :hook (lsp-mode . lsp-ui-mode))
 
 (use-package lsp-rust :ensure
   :init
@@ -309,6 +315,40 @@
   :after lsp-mode)
 
 ;;; scala stuff
+
+;;; test drive Metals in anticipation of it supporting the presentation compiler
+
+(use-package lsp-scala
+  :after scala-mode
+  :demand t
+  ;; Optional - enable lsp-scala automatically in scala files
+  :hook (scala-mode . lsp))
+
+
+;; (defun ensime-edit-definition-with-fallback (arg)
+;;   "Variant of `ensime-edit-definition' with ctags if ENSIME is not available."
+;;   (interactive "P")
+;;   (unless (and (ensime-connection-or-nil)
+;;                (ensime-edit-definition arg))
+;;     (projectile-find-tag)))
+
+;; (use-package ensime :ensure
+;;   :pin melpa-stable
+;;   :init (setq ensime-startup-snapshot-notification nil
+;; 	      ensime-startup-notification nil
+;; 	      ensime-default-java-flags "-Xms4096m -Xmx4096m -XX:ReservedCodeCacheSize=128m -XX:MaxMetaspaceSize=256m")
+;;   :bind (:map ensime-mode-map
+;; 	      ("M-p" . nil)
+;; 	      ("C-c C-p" . 'ensime-backward-note)
+;; 	      ("M-n" . nil)
+;; 	      ("C-c C-n" . 'ensime-forward-note)
+;; 	      ("M-." . 'ensime-edit-definition-with-fallback))
+;;   :config
+;;   (setq scala-indent:align-parameters t
+;; 	scala-indent:align-forms t))
+
+
+
 (use-package scala-mode :ensure
   :config
   (add-hook 'scala-mode-hook
@@ -317,7 +357,6 @@
 	      (show-paren-mode)
 	      (yas-minor-mode)
 	      (company-mode)
-	      (ensime-mode)
 	      (add-to-list 'write-file-functions 'delete-trailing-whitespace))))
 
 (use-package smartparens
@@ -355,31 +394,15 @@
   :config
   (setq sbt:program-options
 	'("-mem" "4096" "-Djline.terminal=none"))
+  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+  ;; allows using SPACE when in the minibuffer
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
   :bind (:map sbt:mode-map
 	      ("C-a" . comint-bol-or-process-mark)
 	      ("C-c C-a" . move-beginning-of-line)))
-
-(defun ensime-edit-definition-with-fallback (arg)
-  "Variant of `ensime-edit-definition' with ctags if ENSIME is not available."
-  (interactive "P")
-  (unless (and (ensime-connection-or-nil)
-               (ensime-edit-definition arg))
-    (projectile-find-tag)))
-
-(use-package ensime :ensure
-  :pin melpa-stable
-  :init (setq ensime-startup-snapshot-notification nil
-	      ensime-startup-notification nil
-	      ensime-default-java-flags "-Xms4096m -Xmx4096m -XX:ReservedCodeCacheSize=128m -XX:MaxMetaspaceSize=256m")
-  :bind (:map ensime-mode-map
-	      ("M-p" . nil)
-	      ("C-c C-p" . 'ensime-backward-note)
-	      ("M-n" . nil)
-	      ("C-c C-n" . 'ensime-forward-note)
-	      ("M-." . 'ensime-edit-definition-with-fallback))
-  :config
-  (setq scala-indent:align-parameters t
-	scala-indent:align-forms t))
 
 ;; Irony
 (use-package irony :ensure
