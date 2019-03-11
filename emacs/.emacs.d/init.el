@@ -80,7 +80,7 @@
 
 (use-package hydra :ensure)
 
-(use-package doom-themes :ensure
+(use-package doom-themes :ensure :demand
   :config
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
