@@ -89,6 +89,10 @@
 ;; Just a reminder to test this one someday
 (use-package tao-theme :ensure)
 
+(use-package eww :ensure)
+(setq browse-url-browser-function 'eww-browse-url)
+
+
 ;;; Helm
 (use-package helm :ensure :demand
   :config (require 'helm-config)
@@ -249,7 +253,7 @@
       '((sbcl ("sbcl" "--dynamic-space-size" "2048") :coding-system utf-8-unix)
 	(ccl ("ccl64")))))
 
-
+(use-package cider :ensure)
 
 ;;; Scheme support for when I'll finally start working on SICP
 (use-package geiser :ensure)
