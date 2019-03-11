@@ -478,6 +478,9 @@
 ;;; lua
 (use-package lua-mode :ensure)
 
+;;; protobuf
+(use-package protobuf-mode :ensure)
+
 ;;; Stack overflow
 (use-package sx :ensure
   :config (bind-keys :prefix "C-c s"
