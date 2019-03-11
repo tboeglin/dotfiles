@@ -71,6 +71,9 @@
       (package-install 'use-package)))
 (require 'use-package)
 
+(setq use-package-always-defer t
+      use-package-always-ensure t)
+
 (use-package exec-path-from-shell :ensure :demand
   :config
   (exec-path-from-shell-initialize))
