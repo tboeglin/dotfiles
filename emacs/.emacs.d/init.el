@@ -15,6 +15,8 @@
       tab-always-indent 'complete
       ffap-machine-p-known 'reject)
 
+(setenv "METALS_ENABLED" "true")
+
 ;;; 0 => never blink. n > 0 => blink n times waiting for input
 (blink-cursor-mode 0)
 
@@ -290,7 +292,7 @@
 
 ;;; for rust
 (defun set-rust-src-path-env-variable ()
-  "Use rustc to get the locally installed source path and set RUST_SRC_PATH to it"
+  "Use rustc to get the locally installed source path and set RUST_SRC_PATH to it."
   (let* ((rust-install-directory (shell-command-to-string "rustc --print sysroot"))
 	(rust-stdlib-src-directory (concat (string-trim rust-install-directory) "/lib/rustlib/src/rust/src")))
     (when (file-directory-p rust-stdlib-src-directory)
@@ -312,6 +314,9 @@
 
 (use-package lsp-ui :ensure
   :hook (lsp-mode . lsp-ui-mode))
+
+(use-package company-lsp :ensure
+  :after company)
 
 (use-package lsp-rust :ensure
   :init
