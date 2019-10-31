@@ -278,6 +278,9 @@
   :config
   (setf dhall-format-command nil))
 
+;; nix
+(use-package nix-mode :ensure)
+
 ;;; erlang
 (use-package erlang :ensure)
 
@@ -303,35 +306,34 @@
   :mode "\\.rs\\'"
   :init
   (setq rust-format-on-save t)
-  (add-hook 'rust-mode-hook 'lsp-mode)
-  (add-hook 'rust-mode-hook 'lsp-rust-enable)
   (add-hook 'rust-mode-hook 'set-rust-src-path-env-variable))
 
 
+(use-package lsp-mode
+  :hook (rust-mode . lsp)
+  :commands lsp
+  :init (setq lsp-prefer-flymake nil
+	      lsp-log-io t))
 
-(use-package lsp-mode :ensure
-  :init (setq lsp-prefer-flymake nil))
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package company-lsp :commands company-lsp)
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
 
-(use-package lsp-ui :ensure
-  :hook (lsp-mode . lsp-ui-mode))
-
-(use-package company-lsp :ensure
-  :after company)
-
-(use-package lsp-rust :ensure
-  :init
-;;  (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
-  :after lsp-mode)
+;(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+;; optionally if you want to use debugger
+(use-package dap-mode
+  :hook ((after-init . dap-mode)
+         (dap-mode . dap-ui-mode)
+         (rust-mode . (lambda () (require 'dap-lldb)))))
 
 ;;; scala stuff
-
-;;; test drive Metals in anticipation of it supporting the presentation compiler
-
 (use-package lsp-scala
   :after scala-mode
   :demand t
   ;; Optional - enable lsp-scala automatically in scala files
   :hook (scala-mode . lsp))
+
 
 
 ;; (defun ensime-edit-definition-with-fallback (arg)
