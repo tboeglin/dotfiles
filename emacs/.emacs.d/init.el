@@ -73,8 +73,9 @@
       (package-install 'use-package)))
 (require 'use-package)
 
-(setq use-package-always-defer t
-      use-package-always-ensure t)
+(global-unset-key (kbd "C-z")) ;;; fuck this binding
+
+(setq use-package-always-ensure t)
 
 (use-package exec-path-from-shell :ensure :demand
   :config
@@ -82,11 +83,16 @@
 
 (use-package hydra :ensure)
 
+(use-package all-the-icons :ensure)
+
+(use-package doom-modeline :ensure
+  :hook (after-init . doom-modeline-mode))
+
 (use-package doom-themes :ensure :demand
   :config
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
-  (load-theme 'doom-one))
+  (load-theme 'doom-city-lights))
 
 ;; Just a reminder to test this one someday
 (use-package tao-theme :ensure)
@@ -98,15 +104,8 @@
 ;;; Helm
 (use-package helm :ensure :demand
   :config (require 'helm-config)
-  (setq helm-quick-update                     t ; do not display invisible candidates
-	helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-	helm-buffers-fuzzy-matching           t ; fuzzy matching buffer names when non--nil
-	helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-	helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-	helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-	helm-ff-file-name-history-use-recentf t)
-
-
+  (setq helm-move-to-line-cycle-in-source     t   ; move to end or beginning of source when reaching top or bottom of source.
+        helm-scroll-amount                    8)  ; scroll 8 lines other window using M-<next>/M-<prior>
   (helm-mode 1)
   :bind (("C-x C-f" . helm-find-files)
 	 ("M-x" . helm-M-x)
@@ -116,7 +115,7 @@
 	 ("C-x C-b" . helm-buffers-list))
   :diminish "")
 
-(use-package helm-pass :ensure)
+;;; (use-package helm-pass :ensure)
 
 ; projectile always activated
 (use-package projectile
@@ -157,11 +156,13 @@
   (global-set-key [C-tab] 'company-complete)
   (add-hook 'after-init-hook 'global-company-mode)
   (global-company-mode 1)
-  :bind (:map company-active-map
-	      ("C-p" . company-select-previous)
-	      ("C-n" . company-select-next)
-	      ("C-d" . company-show-doc-buffer)
-	      ("M-."  . company-show-location)))
+  :bind
+  (("C-<tab>" . company-complete)
+   :map company-active-map
+        ("C-p" . company-select-previous)
+        ("C-n" . company-select-next)
+        ("C-d" . company-show-doc-buffer)
+        ("M-."  . company-show-location)))
 
 (use-package company-quickhelp :ensure
   :config (company-quickhelp-mode))
@@ -181,7 +182,7 @@
   :bind (("\C-cl" . org-store-link)
 	 ("\C-ca" . org-agenda)
 	 ("\C-cc" . org-capture))
-  :config (setq org-log-done t
+  :config (setq org-log-done 'time
 		org-agenda-files (list "~/gtd/inbox.org"	; where stuff lands
 				       "~/gtd/gtd.org"		; where stuff gets refiled in projects
 				       "~/gtd/someday.org"	; where non immediatly actionnable stuff ends
@@ -203,13 +204,9 @@
 
 (use-package ox-reveal :ensure :after org)
 
-;;; contains a function to display the current active keymap
-(use-package help-fns+ :ensure)
-
 ;;; Ace-window for easy window nav
 (use-package ace-window :ensure
   :bind ("C-'" . ace-window))
-
 
 (use-package ace-jump-mode :ensure
   :bind ("C-c SPC" . ace-jump-mode))
@@ -264,11 +261,16 @@
   :init (global-flycheck-mode))
 
 ;;; Haskell
-(use-package intero :ensure
- :after haskell-mode
- :init
- (add-hook 'haskell-mode-hook 'intero-mode)
- (add-hook 'haskell-mode-hook 'flycheck-mode))
+
+(defun stack-bin (binary)
+  (let ((stack-bin-dir (string-trim (shell-command-to-string "stack path --local-bin"))))
+    (concatenate 'string stack-bin-dir "/" binary)))
+
+(use-package lsp-haskell
+  :ensure
+  :after lsp
+  :config
+  (setq lsp-haskell-process-path-hie (stack-bin "hie-wrapper")))
 
 (use-package haskell-mode :ensure
   :config
@@ -310,10 +312,14 @@
 
 
 (use-package lsp-mode
-  :hook (rust-mode . lsp)
+  :demand
+  :hook
+  ((rust-mode . lsp)
+   (haskell-mode . lsp))
   :commands lsp
   :init (setq lsp-prefer-flymake nil
-	      lsp-log-io t))
+	      lsp-log-io t
+	      lsp-file-watch-threshold nil))
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
@@ -321,7 +327,6 @@
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 
 ;(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-;; optionally if you want to use debugger
 (use-package dap-mode
   :hook ((after-init . dap-mode)
          (dap-mode . dap-ui-mode)
@@ -333,31 +338,6 @@
   :demand t
   ;; Optional - enable lsp-scala automatically in scala files
   :hook (scala-mode . lsp))
-
-
-
-;; (defun ensime-edit-definition-with-fallback (arg)
-;;   "Variant of `ensime-edit-definition' with ctags if ENSIME is not available."
-;;   (interactive "P")
-;;   (unless (and (ensime-connection-or-nil)
-;;                (ensime-edit-definition arg))
-;;     (projectile-find-tag)))
-
-;; (use-package ensime :ensure
-;;   :pin melpa-stable
-;;   :init (setq ensime-startup-snapshot-notification nil
-;; 	      ensime-startup-notification nil
-;; 	      ensime-default-java-flags "-Xms4096m -Xmx4096m -XX:ReservedCodeCacheSize=128m -XX:MaxMetaspaceSize=256m")
-;;   :bind (:map ensime-mode-map
-;; 	      ("M-p" . nil)
-;; 	      ("C-c C-p" . 'ensime-backward-note)
-;; 	      ("M-n" . nil)
-;; 	      ("C-c C-n" . 'ensime-forward-note)
-;; 	      ("M-." . 'ensime-edit-definition-with-fallback))
-;;   :config
-;;   (setq scala-indent:align-parameters t
-;; 	scala-indent:align-forms t))
-
 
 
 (use-package scala-mode :ensure
@@ -436,6 +416,8 @@
 
 
 (use-package typescript-mode :ensure
+  :mode (("\\.ts$" . typescript-mode)
+	 ("\\.tsx$" . typescript-mode))
   :config
   (add-hook 'typescript-mode-hook
 	    (lambda ()
