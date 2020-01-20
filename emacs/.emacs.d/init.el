@@ -20,6 +20,8 @@
 ;;; 0 => never blink. n > 0 => blink n times waiting for input
 (blink-cursor-mode 0)
 
+(show-paren-mode)
+
 (when (display-graphic-p)
   (tool-bar-mode -1)
     ;;; who needs a scrollbar?
@@ -272,6 +274,7 @@
   :config
   (setq lsp-haskell-process-path-hie (stack-bin "hie-wrapper")))
 
+
 (use-package haskell-mode :ensure
   :config
   (setq haskell-font-lock-symbols nil))
@@ -322,7 +325,15 @@
 	      lsp-file-watch-threshold nil))
 
 ;; optionally
-(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ui :commands lsp-ui-mode
+  :init (setq lsp-ui-peek-enable nil
+              lsp-ui-sideline-enable nil
+              lsp-ui-imenu-enable nil
+              lsp-ui-doc-enable nil
+              lsp-ui-doc-position 'at-point
+              lsp-ui-doc-include-signature t)
+  :bind (("C-c t" . lsp-ui-doc-glance)))
+
 (use-package company-lsp :commands company-lsp)
 (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 
