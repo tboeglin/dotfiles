@@ -85,8 +85,11 @@
 
 (use-package all-the-icons :ensure)
 
-(use-package doom-modeline :ensure
-  :hook (after-init . doom-modeline-mode))
+(use-package powerline :ensure :demand
+  :hook (after-init . powerline-default-theme))
+
+;;;(use-package doom-modeline :ensure
+;;;  :hook (after-init . doom-modeline-mode))
 
 (use-package doom-themes :ensure :demand
   :config
