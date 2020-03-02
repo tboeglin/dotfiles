@@ -85,7 +85,7 @@
 
 (use-package hydra :ensure)
 
-(use-package all-the-icons :ensure)
+(use-package all-the-icons :ensure :demand)
 
 (use-package powerline :ensure :demand
   :hook (after-init . powerline-default-theme))
@@ -271,12 +271,23 @@
   (let ((stack-bin-dir (string-trim (shell-command-to-string "stack path --local-bin"))))
     (concatenate 'string stack-bin-dir "/" binary)))
 
-(use-package lsp-haskell
-  :ensure
-  :after lsp
-  :config
-  (setq lsp-haskell-process-path-hie (stack-bin "hie-wrapper")))
+(use-package attrap
+  :ensure t
+  :bind (("C-x /" . attrap-attrap)))
 
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :hook
+  ((haskell-mode . flycheck-mode)
+   (haskell-mode . dante-mode)))
+
+;; (use-package lsp-haskell
+;;   :ensure
+;;   :after lsp
+;;   :config
+;;   (setq lsp-haskell-process-path-hie "hie-wrapper"))
 
 (use-package haskell-mode :ensure
   :config
