@@ -83,6 +83,9 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package paredit :ensure :demand
+  :hook (prog-mode . paredit-mode))
+
 (use-package hydra :ensure)
 
 (use-package all-the-icons :ensure)
