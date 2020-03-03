@@ -469,6 +469,8 @@
 	      (flycheck-mode)
 	      (turn-on-purescript-indentation))))
 
+(use-package plantuml-mode :ensure
+  :config (setq plantuml-indent-level 4))
 
 ;;; csharp / omnisharp
 (use-package csharp-mode :ensure)
