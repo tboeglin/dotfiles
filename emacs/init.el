@@ -93,6 +93,8 @@
 (use-package powerline :ensure :demand
   :hook (after-init . powerline-default-theme))
 
+(use-package neotree :ensure)
+
 ;;;(use-package doom-modeline :ensure
 ;;;  :hook (after-init . doom-modeline-mode))
 
