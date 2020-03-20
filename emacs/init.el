@@ -15,6 +15,17 @@
       tab-always-indent 'complete
       ffap-machine-p-known 'reject)
 
+(setq gc-cons-threshold 20000000
+      make-backup-files nil
+      vc-follow-symlinks t
+      sentence-end-double-space nil)
+
+;;; autosave in /tmp
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
 (setenv "METALS_ENABLED" "true")
 
 ;;; 0 => never blink. n > 0 => blink n times waiting for input
