@@ -297,12 +297,6 @@
   ((haskell-mode . flycheck-mode)
    (haskell-mode . dante-mode)))
 
-;; (use-package lsp-haskell
-;;   :ensure
-;;   :after lsp
-;;   :config
-;;   (setq lsp-haskell-process-path-hie "hie-wrapper"))
-
 (use-package haskell-mode :ensure
   :config
   (setq haskell-font-lock-symbols nil))
@@ -346,7 +340,8 @@
   :demand
   :hook
   ((rust-mode . lsp)
-   (haskell-mode . lsp))
+   ;(haskell-mode . lsp)
+   )
   :commands lsp
   :init (setq lsp-prefer-flymake nil
 	      lsp-log-io t
