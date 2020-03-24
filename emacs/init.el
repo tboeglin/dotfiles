@@ -104,6 +104,8 @@
 (use-package powerline :ensure :demand
   :hook (after-init . powerline-default-theme))
 
+(use-package neotree :ensure)
+
 ;;;(use-package doom-modeline :ensure
 ;;;  :hook (after-init . doom-modeline-mode))
 
@@ -202,21 +204,21 @@
 	 ("\C-ca" . org-agenda)
 	 ("\C-cc" . org-capture))
   :config (setq org-log-done 'time
-		org-agenda-files (list "~/gtd/inbox.org"	; where stuff lands
-				       "~/gtd/gtd.org"		; where stuff gets refiled in projects
-				       "~/gtd/someday.org"	; where non immediatly actionnable stuff ends
-				       "~/gtd/tickler.org")	; where stuff
+		org-agenda-files (list "~/Sync/gtd/inbox.org"	; where stuff lands
+				       "~/Sync/gtd/gtd.org"		; where stuff gets refiled in projects
+				       "~/Sync/gtd/someday.org"	; where non immediatly actionnable stuff ends
+				       "~/Sync/gtd/tickler.org")	; where stuff
 		org-clock-persist 'history
 		org-hierarchical-todo-statistics nil
 		org-capture-templates '(("t" "Todo [inbox]" entry
-					 (file+headline "~/gtd/inbox.org" "Tasks")
+					 (file+headline "~/Sync/gtd/inbox.org" "Tasks")
 					 "* TODO %i%?")
 					("T" "Tickler" entry
-					 (file+headline "~/gtd/tickler.org" "Tickler")
+					 (file+headline "~/Sync/gtd/tickler.org" "Tickler")
 					 "* %i%? \n %U"))
-		org-refile-targets '(("~/gtd/gtd.org" :maxlevel . 3)
-				     ("~/gtd/someday.org" :level . 1)
-				     ("~/gtd/tickler.org" :maxlevel . 2))
+		org-refile-targets '(("~/Sync/gtd/gtd.org" :maxlevel . 3)
+				     ("~/Sync/gtd/someday.org" :level . 1)
+				     ("~/Sync/gtd/tickler.org" :maxlevel . 2))
 		org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 
   (org-clock-persistence-insinuate))
