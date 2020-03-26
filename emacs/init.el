@@ -94,9 +94,6 @@
   :config
   (exec-path-from-shell-initialize))
 
-(use-package paredit :ensure :demand
-  :hook (prog-mode . paredit-mode))
-
 (use-package hydra :ensure)
 
 (use-package all-the-icons :ensure :demand)
@@ -386,8 +383,8 @@
 	      (company-mode)
 	      (add-to-list 'write-file-functions 'delete-trailing-whitespace))))
 
-(use-package smartparens
-  :ensure
+(use-package smartparens-config
+  :ensure smartparens
   :commands
   smartparens-strict-mode
   smartparens-mode
@@ -395,22 +392,20 @@
   sp-local-pair
 
   :config
-  (require 'smartparens-config)
-  (require 'smartparens-scala)
   (sp-use-smartparens-bindings)
+  (show-smartparens-global-mode t)
   ;; (sp-pair "(" ")" :wrap "C-(")
   ;; (sp-pair "[" "]" :wrap "s-[") ;; C-[ sends ESC
   ;; (sp-pair "{" "}" :wrap "C-{")
   ;; (sp-local-pair 'scala-mode "(" nil :post-handlers '(("||\n[i]" "RET")))
   ;; (sp-local-pair 'scala-mode "{" nil :post-handlers '(("||\n[i]" "RET") ("| " "SPC")))
   (bind-key "s-{" 'sp-rewrap-sexp smartparens-mode-map)
-
   ;; WORKAROUND https://github.com/Fuco1/smartparens/issues/543
   ;; (bind-key "C-<left>" nil smartparens-mode-map)
   ;; (bind-key "C-<right>" nil smartparens-mode-map)
-
   (bind-key "s-<delete>" 'sp-kill-sexp smartparens-mode-map)
-  (bind-key "s-<backspace>" 'sp-backward-kill-sexp smartparens-mode-map))
+  (bind-key "s-<backspace>" 'sp-backward-kill-sexp smartparens-mode-map)
+  :hook (prog-mode . turn-on-smartparens-strict-mode))
 
 (use-package popup-imenu
   :ensure
