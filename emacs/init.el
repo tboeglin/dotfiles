@@ -65,13 +65,12 @@
 (package-initialize)
 
 (when (string-equal system-type "darwin")
-  (progn
-    (setq mac-option-modifier 'super
-	  mac-command-modifier 'meta
-	  x-select-enable-clipboard t
-	  helm-locate-case-fold-search nil
-	  helm-locate-command "mdfind %s -name %s"
-	  dired-use-ls-dired nil)))
+  (setq mac-option-modifier 'super
+        mac-command-modifier 'meta
+        x-select-enable-clipboard t
+        helm-locate-case-fold-search nil
+        helm-locate-command "mdfind %s -name %s"
+        dired-use-ls-dired nil))
 
 ;;; scratch buffer is immortal
 (add-hook 'kill-buffer-query-functions
@@ -344,7 +343,8 @@
   :commands lsp
   :init (setq lsp-prefer-flymake nil
 	      lsp-log-io t
-	      lsp-file-watch-threshold nil))
+	      lsp-file-watch-threshold 512
+              lsp-enable-file-watchers nil))
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode
