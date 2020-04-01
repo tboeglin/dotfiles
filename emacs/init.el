@@ -520,3 +520,7 @@
 		     ("s" . sx-search)))
 
 (use-package feature-mode :ensure)
+
+(use-package adoc-mode :ensure
+  :mode
+  ("\\.adoc$" . adoc-mode))
