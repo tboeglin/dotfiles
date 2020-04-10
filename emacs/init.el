@@ -65,12 +65,14 @@
 (package-initialize)
 
 (when (string-equal system-type "darwin")
-  (setq mac-option-modifier 'super
+  (progn
+    (message "%s" "setting options for OSX")
+    (setq mac-option-modifier 'super
         mac-command-modifier 'meta
         x-select-enable-clipboard t
         helm-locate-case-fold-search nil
         helm-locate-command "mdfind %s -name %s"
-        dired-use-ls-dired nil))
+        dired-use-ls-dired nil)))
 
 ;;; scratch buffer is immortal
 (add-hook 'kill-buffer-query-functions
