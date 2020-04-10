@@ -111,6 +111,7 @@
   :config
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
+  (doom-themes-treemacs-config)
   (load-theme 'doom-city-lights))
 
 ;; Just a reminder to test this one someday
@@ -118,7 +119,6 @@
 
 (use-package eww :ensure)
 (setq browse-url-browser-function 'eww-browse-url)
-
 
 ;;; Helm
 (use-package helm :ensure :demand
